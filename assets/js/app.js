@@ -1,5 +1,16 @@
 (function(){
   const D=window.THINH_AN_DATA;
+  const heroPause=document.querySelector('.hero-pause');
+  if(heroPause){
+    const hero=heroPause.closest('.hero'),reduced=matchMedia('(prefers-reduced-motion: reduce)');
+    heroPause.addEventListener('click',()=>{
+      const paused=hero.classList.toggle('is-paused');
+      heroPause.setAttribute('aria-pressed',String(paused));
+      heroPause.textContent=paused?'Tiếp tục ảnh':'Tạm dừng ảnh';
+    });
+    const syncMotion=()=>{heroPause.hidden=reduced.matches;};
+    reduced.addEventListener('change',syncMotion);syncMotion();
+  }
   const money=n=>new Intl.NumberFormat('vi-VN').format(n)+'₫';
   const page=document.body.dataset.page||'home';
   const articleCovers={
